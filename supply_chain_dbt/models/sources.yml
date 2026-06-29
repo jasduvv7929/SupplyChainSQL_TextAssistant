@@ -1,0 +1,25 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: main
+    description: "Raw OLTP-style supply chain tables, loaded directly by generate_data.py, not built by dbt."
+    tables:
+      - name: suppliers
+        description: "Supplier master data, including reliability_tier (A/B/C)."
+      - name: warehouses
+        description: "Warehouse master data."
+      - name: products
+        description: "Product catalog, including reorder_point and primary_supplier_id."
+      - name: inventory
+        description: "Current stock snapshot per product per warehouse."
+      - name: purchase_orders
+        description: "Inbound orders from suppliers to warehouses."
+      - name: purchase_order_lines
+        description: "Line items for purchase_orders."
+      - name: customer_orders
+        description: "Outbound orders from warehouses to customers."
+      - name: customer_order_lines
+        description: "Line items for customer_orders."
+      - name: shipments
+        description: "Shipment and delivery performance for customer_orders."
