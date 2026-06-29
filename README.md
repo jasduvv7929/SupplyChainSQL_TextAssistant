@@ -75,17 +75,15 @@ Documented honestly rather than hidden, since a known, measured limitation is mo
 
 ## Evaluation
 
-26 hand-written questions across five difficulty categories, each with a ground-truth answer computed and verified directly against the database, scored using Execution Accuracy: the agent's generated SQL is re-executed independently and its actual result compared against the expected answer, not its prose summary.
+26 questions across five difficulty categories, each with a ground-truth answer computed and verified directly against the database, scored using Execution Accuracy: the agent's generated SQL is re-executed independently and its actual result compared against the expected answer, not its prose summary.
 
 | Category | Description | Result |
 |---|---|---|
-| 1 — Easy | Single table/view, no joins | 8/8 |
-| 2 — Medium | Single join | partial, in progress |
-| 3 — Hard | Multi-join, raw-table-vs-dbt-mart ambiguity | not yet run |
-| 4 — Trap | Deliberate grain/duplication mismatch | not yet run |
-| 5 — Trend | Aggregation, date logic, seasonal patterns | not yet run |
-
-Full results across all 26 questions, broken down by category, will be finalized once evaluation is complete.
+| 1 — Easy | Single table/view, no joins |
+| 2 — Medium | Single join |
+| 3 — Hard | Multi-join, raw-table-vs-dbt-mart ambiguity |
+| 4 — Trap | Deliberate grain/duplication mismatch |
+| 5 — Trend | Aggregation, date logic, seasonal patterns |
 
 ## Project structure
 
