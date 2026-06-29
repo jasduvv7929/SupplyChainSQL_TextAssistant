@@ -77,8 +77,8 @@ Documented honestly rather than hidden, since a known, measured limitation is mo
 
 26 questions across five difficulty categories, each with a ground-truth answer computed and verified directly against the database, scored using Execution Accuracy: the agent's generated SQL is re-executed independently and its actual result compared against the expected answer, not its prose summary.
 
-| Category | Description | Result |
-|---|---|---|
+| Category | Description |
+|---|---|
 | 1 — Easy | Single table/view, no joins |
 | 2 — Medium | Single join |
 | 3 — Hard | Multi-join, raw-table-vs-dbt-mart ambiguity |
