@@ -2,6 +2,8 @@
 
 An agentic text-to-SQL system that answers natural-language questions about a supply chain database. Built around the Model Context Protocol (MCP), a LangGraph agent, and a bounded self-correction loop, with a dbt semantic layer underneath and a three-layer security model protecting the database from the LLM's own output.
 
+> [SQL Assistant Link](https://supplychainsqltextassistant-fgkn3vgsmvrppfciw4wuss.streamlit.app/)
+
 ## What this is
 
 A user asks a question in plain English ("which suppliers have the worst on-time delivery rate?"). A LangGraph agent, backed by a Groq-hosted Llama 3.3 70B model, decides which tools it needs, inspects the database schema, writes SQL, executes it through a custom MCP server, and self-corrects if the query fails or returns something unexpected. The MCP server exposes both raw operational tables and a small set of dbt-built semantic marts, and enforces read-only access at three independent layers regardless of what SQL the model generates.
