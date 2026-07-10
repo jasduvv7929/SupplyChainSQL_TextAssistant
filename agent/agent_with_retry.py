@@ -94,9 +94,18 @@ async def ask_with_self_correction(question: str, verbose: bool = True) -> dict:
                      "(covers suppliers, warehouses, products, inventory, orders, and shipments).",
             "full_trace": None,
         }
-    client = MultiServerMCPClient(
-        {"supply_chain": {"command": "python", "args": [SERVER_PATH], "transport": "stdio"}}
-    )
+    mcp_server_url = os.environ.get("MCP_SERVER_URL")
+    if mcp_server_url:
+        if not mcp_server_url.endswith("/mcp"):
+            mcp_server_url = mcp_server_url.rstrip("/") + "/mcp"
+        client = MultiServerMCPClient(
+            {"supply_chain": {"url": mcp_server_url, "transport": "streamable_http"}}
+        )
+    else:
+           # Local development: spawn the MCP server as a subprocess via stdio
+        client = MultiServerMCPClient(
+            {"supply_chain": {"command": "python", "args": [SERVER_PATH], "transport": "stdio"}}
+        )
     tools = await client.get_tools()
     llm = ChatGroq(model="llama-3.3-70b-versatile", temperature=0)
     agent = create_agent(llm, tools, system_prompt=SYSTEM_PROMPT)
