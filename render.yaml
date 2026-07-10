@@ -8,7 +8,7 @@ services:
       - key: MCP_TRANSPORT
         value: streamable-http
       - key: PYTHON_VERSION
-        value: 3.13.0
+        value: 3.13.5
       - key: DBT_DB_PATH
         value: /opt/render/project/src/db/supply_chain.db
       - key: DBT_SCHEMA_DIR
