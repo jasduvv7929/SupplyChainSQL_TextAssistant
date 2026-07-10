@@ -149,7 +149,7 @@ EVAL_QUESTIONS = [
     {
         "id": "C2-06",
         "category": 2,
-        "question": "Which supplier has the most purchase orders?",
+        "question": "Which supplier (by name) has the most purchase orders?",
         "expected": "Johnson-Davis",
         "check_type": "value_match",
         "notes": "Join: purchase_orders -> suppliers, GROUP BY supplier_name.",

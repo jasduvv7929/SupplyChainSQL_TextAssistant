@@ -99,9 +99,3 @@ if submit and question.strip():
             st.error(f"The agent could not answer this question: {result['error']}")
 elif submit:
     st.warning("Please enter a question.")
-
-st.divider()
-st.caption(
-    "Built as a portfolio project demonstrating agentic text-to-SQL via MCP. "
-    "See the eval/ folder for measured accuracy across 26 verified test questions."
-)

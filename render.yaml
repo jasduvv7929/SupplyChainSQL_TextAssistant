@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: supply-chain-mcp-server
+    runtime: python
+    buildCommand: pip install -r requirements.txt && python build.py
+    startCommand: python mcp_server/server.py
+    envVars:
+      - key: MCP_TRANSPORT
+        value: streamable-http
+      - key: PYTHON_VERSION
+        value: 3.11.0

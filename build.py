@@ -42,7 +42,7 @@ def run(cmd, cwd, step_name):
 def main():
     run([sys.executable, "manage_lock.py", "unlock"], cwd=DB_DIR, step_name="1. Unlock database file")
     run([sys.executable, "generate_data.py"], cwd=DB_DIR, step_name="2. Generate seed data")
-    run(["dbt", "run"], cwd=DBT_DIR, step_name="3. Build dbt mart views")
+    run(["dbt", "run", "--profiles-dir", "."], cwd=DBT_DIR, step_name="3. Build dbt mart views")
     run([sys.executable, "manage_lock.py", "lock"], cwd=DB_DIR, step_name="4. Lock database file (read-only)")
     print("\nBuild complete. Database is generated, dbt marts are built, and the file is locked read-only.")
     print("To rebuild from scratch, just run `python build.py` again.")
