@@ -9,3 +9,7 @@ services:
         value: streamable-http
       - key: PYTHON_VERSION
         value: 3.11.0
+      - key: DBT_DB_PATH
+        value: /opt/render/project/src/db/supply_chain.db
+      - key: DBT_SCHEMA_DIR
+        value: /opt/render/project/src/db
