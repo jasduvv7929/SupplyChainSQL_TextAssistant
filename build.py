@@ -35,14 +35,7 @@ dbt_path = shutil.which("dbt") or str(Path(sys.executable).parent / "dbt")
 def run(cmd, cwd, step_name):
     print(f"\n--- {step_name} ---", flush=True)
     print(f"$ {' '.join(str(c) for c in cmd)}  (in {cwd})", flush=True)
-    result = subprocess.run(
-        cmd, cwd=cwd,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True
-    )
-    print("STDOUT:", result.stdout or "(empty)", flush=True)
-    print("STDERR:", result.stderr or "(empty)", flush=True)
+    result = subprocess.run(cmd, cwd=cwd)
     if result.returncode != 0:
         print(f"\nFAILED at step: {step_name} (exit code {result.returncode})", flush=True)
         sys.exit(result.returncode)
