@@ -63,7 +63,13 @@ SYSTEM_PROMPT = (
     "versus a finer-grained combination (e.g. 'which warehouse-product "
     "pairs'). If the question asks about the coarser entity, use "
     "DISTINCT or GROUP BY on that entity's key to avoid duplicate rows "
-    "from the underlying join grain."
+    "from the underlying join grain. "
+    "Every run_query result includes a 'contains_full_scan' field and "
+    "an optional 'scan_warning'. If contains_full_scan is true and the "
+    "queried table has more than 10,000 rows (purchase_orders, "
+    "customer_orders, purchase_order_lines, customer_order_lines, "
+    "shipments), consider whether the query can be rewritten to use "
+    "an indexed column instead."
 )
 
 MAX_API_RETRIES = 3

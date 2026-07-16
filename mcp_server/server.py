@@ -179,21 +179,39 @@ def run_query(sql: str) -> dict:
         cur.execute(sql)
         columns = [desc[0] for desc in cur.description] if cur.description else []
         rows = cur.fetchall()
-        # Cap returned rows so a poorly-scoped query doesn't flood the
-        # agent's context window.
         MAX_ROWS = 500
         truncated = len(rows) > MAX_ROWS
+
+        # Run EXPLAIN QUERY PLAN on a separate cursor to avoid any
+        # state interference with the cursor that ran the actual query.
+        try:
+            explain_cur = conn.cursor()
+            explain_cur.execute(f"EXPLAIN QUERY PLAN {sql}")
+            plan_rows = explain_cur.fetchall()
+            plan = [
+                {"id": r[0], "parent": r[1], "notused": r[2], "detail": r[3]}
+                for r in plan_rows
+            ]
+            contains_full_scan = any("SCAN" in r["detail"] for r in plan)
+        except Exception:
+            plan = []
+            contains_full_scan = False
+
         return {
             "columns": columns,
             "rows": rows[:MAX_ROWS],
             "row_count": len(rows),
             "truncated": truncated,
+            "query_plan": plan,
+            "contains_full_scan": contains_full_scan,
+            "scan_warning": (
+                "WARNING: This query performs a full table scan on one or more "
+                "large tables. Consider rewriting with more selective filters or "
+                "checking whether an index exists on the filtered columns."
+                if contains_full_scan else None
+            ),
         }
     except sqlite3.Error as e:
-        # This is the actual Layer 1 backstop firing: if validate_select_only
-        # somehow let something through, SQLite's own read-only mode
-        # will refuse any write attempt here, and we surface that error
-        # cleanly instead of crashing.
         return {"error": str(e), "rows": [], "columns": []}
     finally:
         conn.close()
